@@ -17,13 +17,15 @@ amass enum -passive -d $domain -o ~/Desktop/bounty/$domain/$domain.amass
 #parse file
 cat ~/Desktop/bounty/$domain/$domain.massDNS | awk '{print $1}' | sed 's/.$//' | sort -u > ~/Desktop/bounty/$domain/$domain.subdomains
 
+
 #bruteforce
-input="~/Desktop/bounty/$domain/$domain.subdomains"
+input=~/Desktop/bounty/$domain/$domain.subdomains
+cat $input
 while IFS= read -r line
 do
   domain="$line"
   echo "$domain"
-  /opt/ffuf/ffuf -w /usr/share/wordlists/ez.txt -u http://$line/FUZZ -mc 200 -o ~/Desktop/bounty/$domain/domain.json
+  /opt/ffuf/ffuf -w /usr/share/wordlists/Content.txt -u http://$line/FUZZ -mc 200 -o ~/Desktop/bounty/$domain/domain.json
 
 done < "$input"
 
