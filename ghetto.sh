@@ -6,7 +6,7 @@ cd /opt/fresh.py && python3 /opt/fresh.py/fresh.py
 #Enter TLD
 echo 'syntax: example.com'
 read -p "Please enter enter domain : " domain 
-mkdir $domain
+mkdir ~/Desktop/bounty/$domain
 
 #Amass subdomain discovery 
 amass enum -passive -d $domain -o ~/Desktop/bounty/$domain/$domain.Amass
