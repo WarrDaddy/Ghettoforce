@@ -1,7 +1,7 @@
 #/bin/bash 
 
 #DNS resolver refresh
-#cd /opt/fresh.py && python3 /opt/fresh.py/fresh.py
+cd /opt/fresh.py && python3 /opt/fresh.py/fresh.py
 
 #Enter TLD
 echo 'syntax: example.com'
@@ -17,10 +17,8 @@ amass enum -passive -d $domain -o ~/Desktop/bounty/$domain/$domain.Amass
 #parse file
 cat ~/Desktop/bounty/$domain/$domain.massDNS | awk '{print $1}' | sed 's/.$//' | sort -u > ~/Desktop/bounty/$domain/$domain.Subdomain
 
-input="$~/Desktop/bounty/$domain/$domain.Subdomain"
-while IFS= read -r line
+cat ~/Desktop/bounty/$domain/$domain.Subdomain | while read line
 do
-  domain="$line"
-  echo "$domain"
-  /opt/ffuf/ffuf -w /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-small.txt -u http://line/FUZZ -mc 200 -o ~/Desktop/bounty/$domain/domain.json
-done 
+	/opt/ffuf/ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -u http://$line/FUZZ -mc 200 -o ~/Desktop/bounty/domain.json
+done
+
